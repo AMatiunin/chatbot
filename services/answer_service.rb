@@ -1,14 +1,12 @@
-require 'facebook/messenger'
+class AnswerService < ApplicationService
+  attr_reader :message
 
-include Facebook::Messenger
+  def call(message)
+    @message = message
+    #TODO Add logic for Answering due to incoming message
+  end
 
-class Listener
-  Facebook::Messenger::Subscriptions.subscribe(
-    access_token: ENV['ACCESS_TOKEN'],
-    subscribed_fields: %w[feed mention name]
-  )
-
-  Bot.on :message do |message|
+  def standard_reply
     message.reply(
       attachment: {
         type: 'template',
@@ -24,7 +22,7 @@ class Listener
     )
   end
 
-  Bot.on :postback do |postback|
+  def standard_postback_answer
     if postback.payload == 'exercise'
       puts 'Let`s start exercise'
     elsif postback.payload == 'relax'
