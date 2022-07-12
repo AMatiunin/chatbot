@@ -42,4 +42,4 @@ group :development do
 end
 
 gem 'facebook-messenger'
-gem 'dotenv'
+gem 'dotenv-rails'
