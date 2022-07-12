@@ -1,24 +1,15 @@
-# README
+# Simple chat-bot application for facebook messenger
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Plan of implementation:
+1. Planning, ERD
+2. Connection to Heroku, connection to Facebook-messenger
+3. Model creating, associations
+4. User authentication through Facebook API
+5. Implementation of business flow(exercises, sets, repetitions)
+6. Detailed interaction between bot and user
 
-Things you may want to cover:
+* Ruby version 2.4.10
 
-* Ruby version
+* Rails version 5.2.8
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+For running tests type: `rspec` in console
