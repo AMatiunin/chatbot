@@ -9,11 +9,6 @@ class Listener
   )
 
   Bot.on :message do |message|
-    Bot.deliver({
-                  recipient: message.sender,
-                  message: {
-                    text: 'Uploading your message to skynet.'
-                  }
-                }, access_token: ENV['ACCESS_TOKEN'])
+    message.reply(text: 'Hi from bot!')
   end
 end
