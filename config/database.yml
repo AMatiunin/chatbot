@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: chatbot_production
-  username: chatbot
+  username: anton
   password: <%= ENV['CHATBOT_DATABASE_PASSWORD'] %>
