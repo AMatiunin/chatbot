@@ -12,7 +12,7 @@ class AnswerService < ApplicationService
     case answer
     when "EXIT"
       exit_survey(postback)
-    when "START"
+    when "EXERCISE_1"
       start_exercise(postback, 1)
     when "EXERCISE_2"
       start_exercise(postback, 2)
