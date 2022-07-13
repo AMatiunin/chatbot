@@ -1,10 +1,15 @@
-class ApplicationService
+require 'facebook/messenger'
 
-  def self.perform(*args)
-    new(*args).call
+class ApplicationService
+  attr_reader :arg
+
+  def self.perform(arg)
+    new(arg).call
   end
 
-  def initialize(*_); end
+  def initialize(arg)
+    @arg = arg
+  end
 
   def call
     raise NotImplementedError, "class #{self.class.name} must implement abstract method 'call()'"

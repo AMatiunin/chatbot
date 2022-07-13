@@ -1,26 +1,33 @@
 require 'rails_helper'
 
 RSpec.describe Listener do
-  FakeMessage = Struct.new(:sender, :recipient, :timestamp, :message)
+  before(:each) do
+    allow(WelcomeService).to(receive(:perform).and_return({ success: true }))
+    allow(AnswerService).to(receive(:perform).and_return({ success: true }))
+  end
 
   describe 'Bot#on(message)' do
-    before do
-      allow(::AnswerService).to(receive(:perform).and_return({ success: true }))
-    end
+    context 'when user send first message to bot'
 
-    it 'responds with a message' do
+    it 'should run WelcomeService' do
+      expect(WelcomeService).to receive(:perform)
       Bot.trigger(:message, fake_message)
-      expect(Bot).to call(AnswerService)
+    end
+  end
+
+  describe 'Bot#on(postback)' do
+    context 'when user reply by clicking some button'
+
+    it 'should run AnswerService' do
+      expect(AnswerService).to receive(:perform)
+      Bot.trigger(:postback, fake_message)
     end
   end
 
   private
 
   def fake_message
-    sender = { "id" => "1234" }
-    recipient = { "id" => "5678" }
-    timestamp = 1528049653543
     message = { "text" => "Hello, world" }
-    FakeMessage.new(sender, recipient, timestamp, message)
+    Facebook::Messenger::Incoming::Message.new(message)
   end
 end
