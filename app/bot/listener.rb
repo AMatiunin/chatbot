@@ -8,21 +8,10 @@ class Listener
     subscribed_fields: %w[feed mention name]
   )
 
-  Bot.on :message do |message|
-    @user ||= message.sender['id']
-  end
-
-  Bot.on :postback do |postback|
-    @user ||= postback.sender['id']
-    execute_survey(postback)
-  end
-
   def execute_survey(postback)
     answer = postback.payload
 
     case answer
-    when "START_USER_SURVEY"
-      ask_init_question(postback)
     when "EXIT"
       exit_survey(postback)
     when "START"
@@ -36,22 +25,6 @@ class Listener
     else
       puts "Somehow you sent an invalid postback value!"
     end
-  end
-
-  def ask_init_question(postback)
-    postback.reply(
-      attachment: {
-        type: 'template',
-        payload: {
-          template_type: 'button',
-          text: 'Ready to get started?',
-          buttons: [
-            { type: 'postback', title: 'Lets go!', payload: 'START' },
-            { type: 'postback', title: 'No thanks', payload: 'EXIT' }
-          ]
-        }
-      }
-    )
   end
 
   def start_exercise(postback, number)
@@ -74,16 +47,20 @@ class Listener
     postback.reply(text: 'Oh, it`s so sad')
   end
 
+  Bot.on :postback do |postback|
+    execute_survey(postback)
+  end
+
   Bot.on :message do |message|
     message.reply(
       attachment: {
         type: 'template',
         payload: {
           template_type: 'button',
-          text: 'Human, wanna workout?',
+          text: 'Ready to get started?',
           buttons: [
-            { type: 'postback', title: 'Yes', payload: 'exercise' },
-            { type: 'postback', title: 'No', payload: 'relax' }
+            { type: 'postback', title: 'Lets go!', payload: 'START' },
+            { type: 'postback', title: 'No thanks', payload: 'EXIT' }
           ]
         }
       }
