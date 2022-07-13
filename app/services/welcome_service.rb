@@ -14,7 +14,7 @@ class WelcomeService < ApplicationService
           template_type: 'button',
           text: 'Ready to get started?',
           buttons: [
-            { type: 'postback', title: 'Lets go!', payload: 'START' },
+            { type: 'postback', title: 'Lets go!', payload: 'EXERCISE_1' },
             { type: 'postback', title: 'No thanks', payload: 'EXIT' }
           ]
         }

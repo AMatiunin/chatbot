@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_13_165304) do
+ActiveRecord::Schema.define(version: 2022_07_13_172445) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2022_07_13_165304) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "steps", force: :cascade do |t|
+  create_table "rounds", force: :cascade do |t|
     t.integer "name"
     t.integer "count_of_repeat"
     t.integer "relax"
