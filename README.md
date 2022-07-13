@@ -12,4 +12,10 @@ Plan of implementation:
 
 * Rails version 5.2.8
 
+Example of bot:
+https://www.facebook.com/Chat_bot_exercise-106432008805171
+
+Heroku app:
+https://mysterious-island-73837.herokuapp.com
+
 For running tests type: `rspec` in console
