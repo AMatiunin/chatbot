@@ -3,22 +3,22 @@ class WelcomeService < ApplicationService
 
   def call
     @message = arg
-    init_question(message)
+    init_question
   end
 
-  def init_question(message)
-    message.reply(
+  def init_question
+    {
       attachment: {
         type: 'template',
         payload: {
           template_type: 'button',
           text: 'Ready to get started?',
           buttons: [
-            { type: 'postback', title: 'Lets go!', payload: 'EXERCISE_1' },
+            { type: 'postback', title: 'Lets go!', payload: 'START' },
             { type: 'postback', title: 'No thanks', payload: 'EXIT' }
           ]
         }
       }
-    )
+    }
   end
 end

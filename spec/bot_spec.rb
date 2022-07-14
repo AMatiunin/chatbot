@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Listener do
+  let(:fake_message) { Facebook::Messenger::Incoming::Message.new(message) }
+  let(:message) { { 'recipient' => '123' } }
+
   before(:each) do
-    allow(WelcomeService).to(receive(:perform).and_return({ success: true }))
-    allow(AnswerService).to(receive(:perform).and_return({ success: true }))
+    allow(Facebook::Messenger::Bot).to(receive(:deliver).and_return({ success: true }))
   end
 
   describe 'Bot#on(message)' do
@@ -22,12 +24,5 @@ RSpec.describe Listener do
       expect(AnswerService).to receive(:perform)
       Bot.trigger(:postback, fake_message)
     end
-  end
-
-  private
-
-  def fake_message
-    message = { "text" => "Hello, world" }
-    Facebook::Messenger::Incoming::Message.new(message)
   end
 end

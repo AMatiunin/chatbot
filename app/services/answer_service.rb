@@ -7,28 +7,28 @@ class AnswerService < ApplicationService
   end
 
   def postback_answer(postback)
-    answer = postback.payload
+    answer = postback.messaging[:postback][:payload]
 
     case answer
     when "EXIT"
-      exit_survey(postback)
-    when "EXERCISE_1"
-      start_exercise(postback, 1)
+      exit_survey
+    when "START"
+      start_exercise(1)
     when "EXERCISE_2"
-      start_exercise(postback, 2)
+      start_exercise(2)
     when "EXERCISE_3"
-      start_exercise(postback, 3)
+      start_exercise(3)
     when "EXERCISE_4"
-      start_exercise(postback, 4)
+      start_exercise(4)
     when "EXERCISE_5"
-      finish(postback)
+      finish
     else
-      exit_survey(postback)
+      exit_survey
     end
   end
 
-  def start_exercise(postback, number)
-    postback.reply(
+  def start_exercise(number)
+    {
       attachment: {
         type: 'template',
         payload: {
@@ -40,14 +40,14 @@ class AnswerService < ApplicationService
           ]
         }
       }
-    )
+    }
   end
 
-  def exit_survey(postback)
-    postback.reply(text: 'Oh, it`s so sad')
+  def exit_survey
+    { text: 'Oh, it`s so sad' }
   end
 
-  def finish(postback)
-    postback.reply(text: 'You are done all of it')
+  def finish
+    { text: 'You are done all of it' }
   end
 end

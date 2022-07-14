@@ -10,10 +10,10 @@ class Listener
   )
 
   Bot.on :message do |message|
-    WelcomeService.perform(message) if message.present?
+    message.reply(WelcomeService.perform(message)) if message.present?
   end
 
   Bot.on :postback do |postback|
-    AnswerService.perform(postback) if postback.present?
+    postback.reply(AnswerService.perform(postback)) if postback.present?
   end
 end
