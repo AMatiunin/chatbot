@@ -7,7 +7,7 @@ class AnswerService < ApplicationService
   end
 
   def postback_answer(postback)
-    answer = postback.messaging[:postback][:payload]
+    answer = postback.payload
 
     case answer
     when "EXIT"
