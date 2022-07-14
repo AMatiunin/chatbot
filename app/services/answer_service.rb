@@ -1,8 +1,11 @@
 class AnswerService < ApplicationService
-  attr_reader :postback
+  attr_reader :postback, :user
+
+  def initialize(postback)
+    @postback = postback
+  end
 
   def call
-    @postback = arg
     postback_answer(postback)
   end
 
@@ -23,7 +26,7 @@ class AnswerService < ApplicationService
     when "EXERCISE_5"
       finish
     else
-      exit_survey
+      WorkoutService.perform(get_user, answer)
     end
   end
 
@@ -49,5 +52,18 @@ class AnswerService < ApplicationService
 
   def finish
     { text: 'You are done all of it' }
+  end
+
+  private
+
+  def get_user
+    sender_id = postback.sender['id']
+    @user = User.where(external_id: sender_id).first
+    create_new_user(sender_id) unless @user
+  end
+
+  def create_new_user(sender_id)
+    @user = User.new(external_id: sender_id)
+    @user.save
   end
 end

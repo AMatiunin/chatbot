@@ -33,4 +33,22 @@ RSpec.describe AnswerService do
       is_expected.to eq(responce_to_start)
     end
   end
+
+  describe 'Bot#on(postback)' do
+    context 'when user reply by clicking some button'
+
+    let(:fake_postback) { Facebook::Messenger::Incoming::Postback.new(else_payload) }
+    let(:else_payload) { { 'sender' => '456', 'recipient' => '123', payload: 'ELSE' } }
+
+    before(:each) do
+      allow(Facebook::Messenger::Bot).to(receive(:deliver).and_return({ success: true }))
+      allow(fake_postback).to(receive(:payload).and_return(else_payload[:payload]))
+    end
+
+    it 'should run AnswerService' do
+      expect(WorkoutService).to receive(:perform)
+      Bot.trigger(:postback, fake_postback)
+    end
+  end
 end
+
